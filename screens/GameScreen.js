@@ -78,8 +78,9 @@ const GameScreen = ({ userNumber, setGameIsOver, getTotalRoundsNumber }) => {
           </View>
         </View>
       </Card>
-      <View>
+      <View style={styles.listContainer}>
         <FlatList
+          showsVerticalScrollIndicator={false}
           data={guessRounds}
           renderItem={(round) => (
             <GuessLogItem
@@ -113,5 +114,9 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flex: 1,
+  },
+  listContainer: {
+    flex: 1,
+    padding: 16,
   },
 });
