@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Platform } from "react-native";
 import React from "react";
 import { Colors } from "../../constants";
 
@@ -14,14 +14,14 @@ export default Title;
 
 const styles = StyleSheet.create({
   title: {
-    fontFamily:'open-sans-bold',
+    fontFamily: "open-sans-bold",
     fontSize: 24,
-    color: 'white',
+    color: "white",
     textAlign: "center",
-    borderWidth: 2,
-    borderColor: 'white',
+    borderWidth: Platform.OS == "android" ? 2 : 0,
+    borderColor: "white",
     padding: 4,
-    maxWidth:'80%',
-    width:300
+    maxWidth: "80%",
+    width: 300,
   },
 });
