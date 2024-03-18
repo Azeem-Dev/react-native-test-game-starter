@@ -1,4 +1,10 @@
-import { StyleSheet, View, ImageBackground, SafeAreaView } from "react-native";
+import {
+  StyleSheet,
+  View,
+  ImageBackground,
+  SafeAreaView,
+  StatusBar,
+} from "react-native";
 import { GameOverScreen, GameScreen, StartGameScreen } from "./screens";
 import { LinearGradient } from "expo-linear-gradient";
 import DicesImage from "./assets/images/dices.jpg";
@@ -81,20 +87,23 @@ export default function App() {
   };
 
   return (
-    <LinearGradient
-      colors={[Colors.primary700, Colors.accent400]}
-      style={styles.rootContainer}
-      onLayout={onLayoutRootView}
-    >
-      <ImageBackground
-        source={DicesImage}
-        style={styles.imageContainer}
-        resizeMode="cover"
-        imageStyle={styles.backgroundImage}
+    <>
+      <StatusBar style="light" />
+      <LinearGradient
+        colors={[Colors.primary700, Colors.accent400]}
+        style={styles.rootContainer}
+        onLayout={onLayoutRootView}
       >
-        <SafeAreaView style={styles.rootScreen}>{getScreen()}</SafeAreaView>
-      </ImageBackground>
-    </LinearGradient>
+        <ImageBackground
+          source={DicesImage}
+          style={styles.imageContainer}
+          resizeMode="cover"
+          imageStyle={styles.backgroundImage}
+        >
+          <SafeAreaView style={styles.rootScreen}>{getScreen()}</SafeAreaView>
+        </ImageBackground>
+      </LinearGradient>
+    </>
   );
 }
 
