@@ -88,7 +88,7 @@ export default function App() {
 
   return (
     <>
-      <StatusBar style="light" />
+      <StatusBar barStyle={"light-content"} />
       <LinearGradient
         colors={[Colors.primary700, Colors.accent400]}
         style={styles.rootContainer}
