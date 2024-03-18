@@ -7,13 +7,16 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 
 let minBoundary = 1;
 let maxBoundary = 100;
-const GameScreen = ({ userNumber, setGameIsOver }) => {
+let count = 0;
+const GameScreen = ({ userNumber, setGameIsOver, getTotalRoundsNumber }) => {
   let initialGuess = generateRandomBetween(1, 100, userNumber);
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
 
   useEffect(() => {
     if (currentGuess == userNumber) {
       setGameIsOver(true);
+      getTotalRoundsNumber(count);
+      count = 0;
     }
   }, [currentGuess, userNumber]);
 
@@ -41,6 +44,7 @@ const GameScreen = ({ userNumber, setGameIsOver }) => {
       currentGuess
     );
     setCurrentGuess(newGuess);
+    count++;
   });
   return (
     <View style={styles.screen}>
