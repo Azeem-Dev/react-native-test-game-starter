@@ -1,4 +1,11 @@
-import { View, Text, StyleSheet, Alert, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Alert,
+  FlatList,
+  useWindowDimensions,
+} from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import { Card, NumberContainer, PrimaryButton, Title } from "../components";
 import { generateRandomBetween } from "../constants";
@@ -13,6 +20,8 @@ const GameScreen = ({ userNumber, setGameIsOver, getTotalRoundsNumber }) => {
   let initialGuess = generateRandomBetween(1, 100, userNumber);
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
   const [guessRounds, setGuessRounds] = useState([]);
+
+  const { width, height } = useWindowDimensions();
 
   useEffect(() => {
     minBoundary = 1;
@@ -57,9 +66,9 @@ const GameScreen = ({ userNumber, setGameIsOver, getTotalRoundsNumber }) => {
     setCurrentGuess(newGuess);
     count++;
   });
-  return (
-    <View style={styles.screen}>
-      <Title>Opponent's Guess</Title>
+
+  let content = (
+    <>
       <NumberContainer>{currentGuess}</NumberContainer>
       <Card style={styles.cardContainer}>
         <InstructionText style={styles.instructionText}>
@@ -78,6 +87,33 @@ const GameScreen = ({ userNumber, setGameIsOver, getTotalRoundsNumber }) => {
           </View>
         </View>
       </Card>
+    </>
+  );
+
+  if (width > 500) {
+    content = (
+      <>
+        <View style={styles.buttonsContainerWide}>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPress={nextGuessHanlder.bind(this, "-")}>
+              <Ionicons name="remove" size={24} color="white" />
+            </PrimaryButton>
+          </View>
+          <NumberContainer>{currentGuess}</NumberContainer>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPress={nextGuessHanlder.bind(this, "+")}>
+              <Ionicons name="add-sharp" size={24} color="white" />
+            </PrimaryButton>
+          </View>
+        </View>
+      </>
+    );
+  }
+  let newStyle = width > 500 ? { marginTop: 36 } : {};
+  return (
+    <View style={[styles.screen, newStyle]}>
+      <Title>Opponent's Guess</Title>
+      {content}
       <View style={styles.listContainer}>
         <FlatList
           showsVerticalScrollIndicator={false}
@@ -105,13 +141,17 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 12,
     marginTop: 100,
-    alignItems:'center'
+    alignItems: "center",
   },
   instructionText: {
     marginBottom: 12,
   },
   buttonsContainer: {
     flexDirection: "row",
+  },
+  buttonsContainerWide: {
+    flexDirection: "row",
+    alignItems: "center",
   },
   buttonContainer: {
     flex: 1,
